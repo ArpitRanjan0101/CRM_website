@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Select from "react-select";
 import SEOComponent from "@/components/SEOComponent";
 import { slugify } from "@/lib/utils";
 
@@ -79,6 +80,14 @@ export default function BlogsPage() {
     ),
   ];
 
+  const selectOptions = categoryOptions.map((category) => ({
+    value: category,
+    label: category,
+  }));
+
+  const selectedCategoryOption =
+    selectOptions.find((option) => option.value === activeCategory) || selectOptions[0];
+
   const displayPosts =
     activeCategory === ALL_CATEGORY
       ? posts
@@ -92,6 +101,8 @@ export default function BlogsPage() {
     const slug = slugify(title);
     router.push(`/blogs/${slug}`);
   };
+
+  const menuPortalTarget = typeof window !== "undefined" ? document.body : null;
 
   return (
     <main className="min-h-screen bg-[#0b1220]">
@@ -127,22 +138,104 @@ export default function BlogsPage() {
 
       <section className="px-6 py-4">
         <div className="mx-auto max-w-7xl">
-          <div className="inline-flex max-w-full flex-wrap gap-2 rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_12px_30px_rgba(0,0,0,0.18)]">
-            {categoryOptions.map((item) => (
-              <button
-                key={item}
-                onClick={() => setActiveCategory(item)}
-                type="button"
-                className={`inline-flex min-w-[96px] items-center justify-center rounded-[1.05rem] border px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] transition-all duration-300 ${
-                  activeCategory === item
-                    ? "border-[#19d3a2]/40 bg-gradient-to-r from-[#00b274] via-[#19d3a2] to-[#4dd2ff] text-white shadow-[0_10px_30px_rgba(0,178,116,0.24)]"
-                    : "border-white/8 bg-[#131c2d] text-slate-300 hover:border-[#00b274]/30 hover:bg-[#102434] hover:text-white"
-                }`}
-                aria-pressed={activeCategory === item}
-              >
-                {item}
-              </button>
-            ))}
+          <div className="max-w-md">
+            <label
+              htmlFor="blog-category-select"
+              className="mb-3 block text-[10px] font-semibold uppercase tracking-[0.28em] text-[#8be9ff]"
+            >
+              Filter By Category
+            </label>
+            <Select
+              inputId="blog-category-select"
+              instanceId="blog-category-select"
+              options={selectOptions}
+              value={selectedCategoryOption}
+              isSearchable={false}
+              onChange={(option) => setActiveCategory(option?.value || ALL_CATEGORY)}
+              menuPortalTarget={menuPortalTarget}
+              styles={{
+                control: (base, state) => ({
+                  ...base,
+                  minHeight: 60,
+                  borderRadius: 20,
+                  borderColor: state.isFocused ? "rgba(25, 211, 162, 0.5)" : "rgba(255,255,255,0.1)",
+                  background: "linear-gradient(135deg, rgba(17,28,45,0.98), rgba(11,18,32,0.96))",
+                  boxShadow: state.isFocused
+                    ? "0 0 0 3px rgba(25, 211, 162, 0.12), 0 18px 40px rgba(0, 0, 0, 0.22)"
+                    : "0 18px 40px rgba(0, 0, 0, 0.18)",
+                  cursor: "pointer",
+                  paddingLeft: 10,
+                  transition: "all 180ms ease",
+                  "&:hover": {
+                    borderColor: "rgba(25, 211, 162, 0.4)",
+                  },
+                }),
+                valueContainer: (base) => ({
+                  ...base,
+                  padding: "0 8px",
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: "#ffffff",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                }),
+                placeholder: (base) => ({
+                  ...base,
+                  color: "rgba(148, 163, 184, 0.9)",
+                  fontSize: 12,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                }),
+                indicatorSeparator: () => ({
+                  display: "none",
+                }),
+                dropdownIndicator: (base, state) => ({
+                  ...base,
+                  color: state.isFocused ? "#7ef7c4" : "#94a3b8",
+                  paddingRight: 18,
+                  "&:hover": {
+                    color: "#7ef7c4",
+                  },
+                }),
+                menuPortal: (base) => ({
+                  ...base,
+                  zIndex: 300,
+                }),
+                menu: (base) => ({
+                  ...base,
+                  overflow: "hidden",
+                  marginTop: 10,
+                  borderRadius: 20,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "linear-gradient(180deg, rgba(12,22,38,0.98), rgba(8,16,29,0.98))",
+                  boxShadow: "0 24px 70px rgba(0, 0, 0, 0.34)",
+                }),
+                menuList: (base) => ({
+                  ...base,
+                  padding: 8,
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  marginBottom: 6,
+                  borderRadius: 14,
+                  background: state.isSelected
+                    ? "linear-gradient(90deg, #00b274, #19d3a2)"
+                    : state.isFocused
+                      ? "rgba(20, 195, 142, 0.14)"
+                      : "transparent",
+                  color: "#ffffff",
+                  fontSize: 12,
+                  fontWeight: state.isSelected ? 700 : 600,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                  padding: "14px 16px",
+                }),
+              }}
+            />
           </div>
         </div>
       </section>
