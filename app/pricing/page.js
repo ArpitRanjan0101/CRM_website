@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
 import ContactLink from "@/components/ContactLink";
 import Reveal from "@/components/Reveal";
+import ContactSection from "@/components/ContactSection";
 
 const plans = [
   {
@@ -75,14 +76,14 @@ export default function PricingPage() {
       <Navbar />
 
       {/* Page Hero Section - Transparent */}
-      <div className="relative overflow-hidden pt-32 pb-12">
+      <div className="relative overflow-hidden pt-32 pb-8">
 
         <div className="container max-w-7xl mx-auto px-6 relative z-10">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
+          <div className="flex flex-col gap-3">
+            <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
               Flexible Pricing Plans
             </h1>
-            <nav className="flex text-sm text-white/70 font-medium">
+            <nav className="flex text-xs text-white/70 font-medium">
               <ol className="flex items-center gap-2">
                 <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
                 <li><span>&gt;</span></li>
@@ -94,17 +95,17 @@ export default function PricingPage() {
       </div>
 
       {/* Main Content Area */}
-      <div className="py-24 px-6 relative">
+      <div className="py-16 px-6 relative">
         <div className="container max-w-7xl mx-auto relative z-10">
           
           {/* Billing Toggle */}
-          <div className="flex justify-center mb-24">
-            <div className="bg-white/5 backdrop-blur-md p-1.5 rounded-full flex items-center gap-1 border border-white/10 shadow-2xl">
+          <div className="flex justify-center mb-16">
+            <div className="bg-white/5 backdrop-blur-md p-1 rounded-full flex items-center gap-1 border border-white/10 shadow-2xl">
               {["quarterly", "semiannual", "annual"].map((cycle) => (
                 <button
                   key={cycle}
                   onClick={() => setBillingCycle(cycle)}
-                  className={`relative px-8 py-3 rounded-full text-sm font-bold capitalize transition-all duration-300 ${
+                  className={`relative px-6 py-2.5 rounded-full text-xs font-bold capitalize transition-all duration-300 ${
                     billingCycle === cycle ? "text-white" : "text-slate-400 hover:text-slate-200"
                   }`}
                 >
@@ -125,33 +126,33 @@ export default function PricingPage() {
                   plan.highlighted ? "border-[#00b274] shadow-[0_20px_50px_rgba(0,178,116,0.1)] scale-105" : "border-white/10"
                 }`}>
                   {plan.badge && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00b274] text-white text-[10px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#00b274] text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
                       {plan.badge}
                     </div>
                   )}
 
-                  <div className="mb-8">
-                    <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
-                    <div className="flex items-baseline gap-1 mb-4">
-                      <span className="text-2xl text-slate-400">₹</span>
-                      <span className="text-5xl font-bold text-white">{plan.price[billingCycle].toLocaleString()}</span>
-                      <span className="text-slate-400 text-sm">/month</span>
+                  <div className="mb-6">
+                    <h3 className="text-lg font-bold text-white mb-1.5">{plan.name}</h3>
+                    <div className="flex items-baseline gap-1 mb-3">
+                      <span className="text-xl text-slate-400">₹</span>
+                      <span className="text-4xl font-bold text-white">{plan.price[billingCycle].toLocaleString()}</span>
+                      <span className="text-slate-400 text-[11px]">/month</span>
                     </div>
-                    <p className="text-slate-500 text-sm">{plan.description}</p>
+                    <p className="text-slate-500 text-xs">{plan.description}</p>
                   </div>
 
-                  <div className="space-y-4 mb-10 flex-grow">
+                  <div className="space-y-3.5 mb-8 flex-grow">
                     {plan.features.map((feature, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <svg className="w-5 h-5 text-[#00b274] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div key={i} className="flex items-start gap-2.5">
+                        <svg className="w-4 h-4 text-[#00b274] mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-slate-300 text-sm">{feature}</span>
+                        <span className="text-slate-300 text-[13px]">{feature}</span>
                       </div>
                     ))}
                   </div>
 
-                  <button className={`w-full py-4 rounded-full font-bold transition-all duration-300 ${
+                  <button className={`w-full py-3.5 rounded-full text-sm font-bold transition-all duration-300 ${
                     plan.highlighted
                       ? "bg-gradient-to-r from-[#00b274] to-[#008a5a] text-white shadow-lg shadow-[#00b274]/20 hover:scale-105"
                       : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
@@ -164,16 +165,17 @@ export default function PricingPage() {
           </div>
 
           {/* Bottom FAQ CTA */}
-          <div className="mt-32 p-12 rounded-3xl bg-gradient-to-br from-[#00b274]/5 to-blue-500/5 border border-white/10 text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">Need a custom plan?</h3>
-            <p className="text-slate-400 mb-8 max-w-xl mx-auto">
+          <div className="mt-24 p-10 rounded-3xl bg-gradient-to-br from-[#00b274]/5 to-blue-500/5 border border-white/10 text-center">
+            <h3 className="text-xl font-bold text-white mb-3">Need a custom plan?</h3>
+            <p className="text-slate-400 mb-6 max-w-xl mx-auto text-sm">
               We offer tailored solutions for large-scale enterprises with specific security and integration requirements.
             </p>
-            <ContactLink className="text-[#00b274] font-bold hover:underline">Contact our sales team &rarr;</ContactLink>
+            <ContactLink className="text-[#00b274] text-sm font-bold hover:underline">Contact our sales team &rarr;</ContactLink>
           </div>
         </div>
       </div>
 
+      <ContactSection />
     </main>
   );
 }

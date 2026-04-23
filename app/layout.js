@@ -1,4 +1,6 @@
 import "./globals.css";
+import Chatbot from "@/components/Chatbot";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const dynamic = 'force-dynamic';
 
@@ -12,6 +14,8 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="antialiased">
         {children}
+        <Chatbot />
+        <WhatsAppButton />
       </body>
     </html>
   );
