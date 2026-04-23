@@ -6,16 +6,16 @@ export default function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
       {/* Background Image with Overlays */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         <img
           src="/img.png"
           alt="Modern Office"
           className="w-full h-full object-cover filter brightness-[1.1] contrast-[1.05]"
         />
         {/* Main Gradient Overlay - Darker on the left for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0b1220]/90 via-[#0b1220]/60 to-transparent backdrop-blur-[2px]" />
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-[#0b1220]/90 via-[#0b1220]/60 to-transparent backdrop-blur-[2px]" />
         {/* Bottom Fade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0b1220]/80" />
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[#0b1220]/80" />
         {/* Subtle Backdrop Blur on a separate layer if needed, but here we'll keep it sharp as requested by 'visible' */}
       </div>
 

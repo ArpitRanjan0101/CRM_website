@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import NextImage from "next/image";
+
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import BookCallModal from "./BookCallModal";
@@ -63,7 +65,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[80] transition-all duration-300 will-change-transform ${
+        className={`fixed top-0 left-0 w-full z-[200] isolate pointer-events-auto transition-all duration-300 will-change-transform ${
           isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
         } ${
           isScrolled
@@ -73,9 +75,15 @@ export default function Navbar() {
       >
         <div className="relative z-10 max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="relative z-10 inline-flex items-center gap-2 cursor-pointer" aria-label="Go to home page">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#14c38e] via-[#19d3a2] to-[#53e5e2] rounded-lg rotate-12 flex items-center justify-center shadow-[0_8px_24px_rgba(20,195,142,0.35)]">
-                <span className="text-white font-bold -rotate-12">T</span>
+            <Link href="/" className="relative z-10 inline-flex items-center gap-3 cursor-pointer" aria-label="Go to home page">
+              <div className="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 shadow-lg shadow-[#14c38e]/10">
+                <NextImage 
+                  src="/triostack-logo.jpeg" 
+                  alt="Triostack Logo" 
+                  fill 
+                  className="object-cover"
+                />
+
               </div>
               <span className="text-xl font-bold text-[#f3fffb] tracking-tight">Triostack</span>
             </Link>

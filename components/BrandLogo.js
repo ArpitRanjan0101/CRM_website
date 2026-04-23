@@ -1,8 +1,9 @@
-import Image from "next/image";
+import NextImage from "next/image";
+
 
 export default function BrandLogo({ className = "" }) {
   return (
-    <Image
+    <NextImage
       src="/logo/triorecord%20logo.png"
       alt=""
       width={416}
@@ -10,5 +11,6 @@ export default function BrandLogo({ className = "" }) {
       className={`${className} object-contain`}
       priority
     />
+
   );
 }

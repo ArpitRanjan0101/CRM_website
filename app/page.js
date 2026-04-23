@@ -9,6 +9,8 @@ import ContactSection from "@/components/ContactSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import BrandSection from "@/components/BrandSection";
 import ConsultationSection from "@/components/ConsultationSection";
+import GooglePlaySection from "@/components/GooglePlaySection";
+
 
 export default function HomePage() {
   return (
@@ -20,7 +22,9 @@ export default function HomePage() {
       <PricingSection />
       <TestimonialSection />
       <ConsultationSection />
+      <GooglePlaySection />
       <FAQSection />
+
       <BrandSection />
       <TrustSection />
       <ContactSection />
