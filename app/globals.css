@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #0b1220;
+    --foreground: #ffffff;
+    --accent: #00b274;
+    --accent-glow: rgba(0, 178, 116, 0.4);
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased selection:bg-[#00b274]/30;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scrollbar-width: thin;
+    scrollbar-color: #00b274 transparent;
+  }
+
+  /* Custom Scrollbar for Chrome, Safari and Edge */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #00b274;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #009661;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/10;
+  }
+  
+  .glass-card {
+    @apply bg-white/95 backdrop-blur-xl border border-white/20 shadow-2xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulseSlow 4s infinite ease-in-out;
+  }
+
+  @keyframes pulseSlow {
+    0%, 100% { 
+      transform: scale(1);
+      text-shadow: 0 0 0px rgba(0, 178, 116, 0);
+      opacity: 0.9;
+    }
+    50% { 
+      transform: scale(1.06);
+      text-shadow: 0 0 20px rgba(0, 178, 116, 0.6);
+      opacity: 1;
+    }
+  }
+
+  /* Reveal Animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Premium Glass Utilities */
+  .glass-dark {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-glow:hover {
+    border-color: rgba(0, 178, 116, 0.4);
+    box-shadow: 0 0 25px rgba(0, 178, 116, 0.15);
+  }
+
+  /* Marquee Animation */
+  .animate-marquee-right {
+    animation: marqueeRight 40s linear infinite;
+  }
+
+  @media (max-width: 768px) {
+    .animate-marquee-right {
+      animation-duration: 25s;
+    }
+  }
+
+  .pause-on-hover:hover .animate-marquee-right {
+    animation-play-state: paused;
+  }
+
+  @keyframes marqueeRight {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .mask-gradient {
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+}
