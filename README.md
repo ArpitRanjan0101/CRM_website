@@ -107,6 +107,26 @@ docker build -t crm_website .
 docker run --rm -p 3000:3000 crm_website
 ```
 
+## Docker (Development / Hot Reload)
+
+Runs `next dev` in a container with your source mounted, so edits auto-reload.
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
+Then open:
+
+```text
+http://localhost:3000
+```
+
+If you change `package-lock.json` / dependencies, rebuild:
+
+```bash
+docker compose -f docker-compose.dev.yml up --build
+```
+
 ### 3. Create a production build
 
 ```bash
