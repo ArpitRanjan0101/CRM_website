@@ -104,8 +104,9 @@ export default function BookCallModal({
             <div>
               <input
                 type="email"
-                placeholder="Work Email (Optional)"
+                placeholder="Work Email *"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
+                required
               />
             </div>
             <div>

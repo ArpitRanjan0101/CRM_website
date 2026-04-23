@@ -6,7 +6,7 @@ export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLeadsCaptured, setIsLeadsCaptured] = useState(false);
   const [step, setStep] = useState("questions"); // questions, complete
-  const [formData, setFormData] = useState({ name: "", phone: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [messages, setMessages] = useState([
     { role: "bot", content: "Hi! Welcome to CRM Solutions. I'm here to help you find the perfect plan for your business." }
@@ -34,7 +34,7 @@ export default function Chatbot() {
 
   const handleInitialSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.phone.trim()) return;
+    if (!formData.name.trim() || !formData.email.trim() || !formData.phone.trim()) return;
 
     setIsLeadsCaptured(true);
     setMessages((prev) => [
@@ -124,6 +124,17 @@ export default function Chatbot() {
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-[#00b274] focus:ring-1 focus:ring-[#00b274]/50 transition-all"
                 />
               </div>
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase tracking-widest font-bold text-[#00b274] ml-1">Work Email</label>
+                <input
+                  required
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="john@company.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-[#00b274] focus:ring-1 focus:ring-[#00b274]/50 transition-all"
+                />
+              </div>
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#00b274] to-[#008a5a] text-white py-4 rounded-2xl font-bold shadow-lg shadow-[#00b274]/20 hover:scale-[1.02] active:scale-95 transition-all mt-4 flex items-center justify-center gap-2"
@@ -204,4 +215,3 @@ export default function Chatbot() {
     </div>
   );
 }
-

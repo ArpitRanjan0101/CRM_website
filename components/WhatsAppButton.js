@@ -4,7 +4,11 @@ import { useState } from "react";
 
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [contactData, setContactData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
   const [userMsg, setUserMsg] = useState("");
 
   const phoneNumber = "919211941924";
@@ -12,7 +16,15 @@ export default function WhatsAppButton() {
   
   const handleStartChat = (e) => {
     if (e) e.preventDefault();
-    const finalMsg = userMsg.trim() || defaultMessage;
+    if (!contactData.name.trim() || !contactData.email.trim() || !contactData.phone.trim()) return;
+
+    const finalMsg = [
+      `Name: ${contactData.name.trim()}`,
+      `Email: ${contactData.email.trim()}`,
+      `Phone: ${contactData.phone.trim()}`,
+      "",
+      userMsg.trim() || defaultMessage,
+    ].join("\n");
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(finalMsg)}`;
     window.open(whatsappUrl, "_blank");
   };
@@ -66,6 +78,39 @@ export default function WhatsAppButton() {
           </div>
 
           <form onSubmit={handleStartChat} className="space-y-3">
+            <div className="space-y-1.5">
+              <label className="ml-1 text-[10px] font-bold uppercase tracking-widest text-[#25D366]">Full Name</label>
+              <input
+                required
+                type="text"
+                value={contactData.name}
+                onChange={(e) => setContactData({ ...contactData, name: e.target.value })}
+                placeholder="John Doe"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-sm text-white transition-all focus:border-[#25D366] focus:outline-none placeholder:text-white/20"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="ml-1 text-[10px] font-bold uppercase tracking-widest text-[#25D366]">Work Email</label>
+              <input
+                required
+                type="email"
+                value={contactData.email}
+                onChange={(e) => setContactData({ ...contactData, email: e.target.value })}
+                placeholder="john@company.com"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-sm text-white transition-all focus:border-[#25D366] focus:outline-none placeholder:text-white/20"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <label className="ml-1 text-[10px] font-bold uppercase tracking-widest text-[#25D366]">Phone Number</label>
+              <input
+                required
+                type="tel"
+                value={contactData.phone}
+                onChange={(e) => setContactData({ ...contactData, phone: e.target.value })}
+                placeholder="+91 98765 43210"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-sm text-white transition-all focus:border-[#25D366] focus:outline-none placeholder:text-white/20"
+              />
+            </div>
             <div className="relative">
               <textarea 
                 value={userMsg}

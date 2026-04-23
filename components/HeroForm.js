@@ -32,8 +32,9 @@ export default function HeroForm() {
         <div>
           <input 
             type="email" 
-            placeholder="Work Email (Optional)" 
+            placeholder="Work Email *" 
             className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#00b274]/20 focus:border-[#00b274] transition-all"
+            required
           />
         </div>
         <div>
