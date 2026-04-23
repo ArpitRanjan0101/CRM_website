@@ -1,4 +1,5 @@
 import "./globals.css";
+import SocialStickyBar from "@/components/SocialStickyBar";
 
 export const dynamic = 'force-dynamic';
 
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="antialiased">
+        <SocialStickyBar />
         {children}
       </body>
     </html>
