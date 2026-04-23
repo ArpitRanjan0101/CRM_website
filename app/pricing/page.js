@@ -184,7 +184,12 @@ export default function PricingPage() {
             <p className="text-slate-400 mb-6 max-w-xl mx-auto text-sm">
               We offer tailored solutions for large-scale enterprises with specific security and integration requirements.
             </p>
-            <ContactLink className="text-[#00b274] text-sm font-bold hover:underline">Contact our sales team &rarr;</ContactLink>
+            <button 
+              onClick={() => handlePlanAction({ name: "Custom Enterprise", buttonText: "Contact Sales" })}
+              className="text-[#00b274] text-sm font-bold hover:underline cursor-pointer"
+            >
+              Contact our sales team &rarr;
+            </button>
           </div>
         </div>
       </div>

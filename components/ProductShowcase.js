@@ -1,5 +1,8 @@
 "use client";
 
+import { useState } from "react";
+import BookCallModal from "./BookCallModal";
+
 const productHighlights = [
   {
     title: "Real-time analytics dashboard",
@@ -34,6 +37,8 @@ const productHighlights = [
 ];
 
 export default function ProductShowcase() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="bg-gradient-to-b from-[#0b1220] to-[#0e1a2b] py-16 md:py-20 relative overflow-hidden">
       {/* Decorative Glows */}
@@ -93,7 +98,10 @@ export default function ProductShowcase() {
 
             {/* CTA Button */}
             <div className="text-center lg:text-left">
-              <button className="relative group bg-gradient-to-r from-[#00b274] to-[#00d48a] text-white px-10 py-4 rounded-full font-bold transition-all duration-300 shadow-lg shadow-[#00b274]/20 hover:-translate-y-1 overflow-hidden">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="relative group bg-gradient-to-r from-[#00b274] to-[#00d48a] text-white px-10 py-4 rounded-full font-bold transition-all duration-300 shadow-lg shadow-[#00b274]/20 hover:-translate-y-1 overflow-hidden"
+              >
                 <span className="relative z-10">Book a Demo</span>
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               </button>
@@ -102,6 +110,13 @@ export default function ProductShowcase() {
 
         </div>
       </div>
+
+      <BookCallModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        title="Book a Live Demo"
+        subtitle="See our platform in action. Share your details and we'll schedule a personalized walkthrough."
+      />
     </section>
   );
 }

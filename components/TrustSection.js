@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import ContactLink from "./ContactLink";
+import BookCallModal from "./BookCallModal";
 
 export default function TrustSection() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -120,13 +121,23 @@ export default function TrustSection() {
               ))}
             </div>
 
-            <ContactLink className="inline-flex items-center justify-center bg-gradient-to-r from-[#00b274] to-[#009661] text-white font-bold px-10 py-4 rounded-full shadow-lg shadow-[#00b274]/20 hover:shadow-[#00b274]/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center justify-center bg-gradient-to-r from-[#00b274] to-[#009661] text-white font-bold px-10 py-4 rounded-full shadow-lg shadow-[#00b274]/20 hover:shadow-[#00b274]/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer"
+            >
               Get a Callback
-            </ContactLink>
+            </button>
           </div>
 
         </div>
       </div>
+
+      <BookCallModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        title="Request a Callback"
+        subtitle="Our team will call you back within 24 hours to discuss your business needs."
+      />
     </section>
   );
 }
