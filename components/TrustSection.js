@@ -46,10 +46,12 @@ export default function TrustSection() {
               
               <div className="flex flex-col items-center text-center space-y-8">
                 {/* Cube Style Logo Placeholder */}
-                <div className="w-20 h-20 bg-gradient-to-br from-[#00b274] to-[#009661] rounded-2xl shadow-lg shadow-[#00b274]/20 flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform duration-500">
-                  <svg className="w-10 h-10 text-white -rotate-12 group-hover:rotate-0 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
+                <div className="w-20 h-20 bg-white rounded-2xl shadow-lg shadow-[#00b274]/20 flex items-center justify-center rotate-12 group-hover:rotate-0 transition-transform duration-500 overflow-hidden">
+                  <img 
+                    src="/triostack-logo.jpeg" 
+                    alt="Triostack Logo" 
+                    className="w-full h-full object-cover -rotate-12 group-hover:rotate-0 transition-transform duration-500" 
+                  />
                 </div>
 
                 <div>

@@ -23,7 +23,7 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* Left Content */}
-          <div className="animate-fade-in [animation-delay:200ms] opacity-0">
+          <div className="hidden lg:block animate-fade-in [animation-delay:200ms] opacity-0">
             <div className="mb-6">
               <span className="text-[#00b274] text-xs font-bold tracking-[0.3em] uppercase block mb-4">
                 Software Solution

@@ -1,16 +1,14 @@
-import NextImage from "next/image";
+
 
 
 export default function BrandLogo({ className = "" }) {
   return (
-    <NextImage
+    <img
       src="/logo/triorecord%20logo.png"
-      alt=""
-      width={416}
-      height={416}
+      alt="Brand Logo"
       className={`${className} object-contain`}
-      priority
     />
+
 
   );
 }

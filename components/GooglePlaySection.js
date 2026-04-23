@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import NextImage from 'next/image';
+
 
 
 const featureCards = [
@@ -52,10 +52,75 @@ export default function GooglePlaySection() {
 
       <div className="relative mx-auto max-w-7xl">
         <div className="overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(135deg,rgba(9,17,29,0.96),rgba(7,14,24,0.88))] shadow-[0_32px_120px_rgba(0,0,0,0.28)]">
-          <div className="grid items-center gap-10 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-14">
+          <div className="grid items-center gap-10 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:px-14 lg:py-14">
+            
+            {/* Content - Now on Left */}
             <div
-              className={`relative flex justify-center transition-all duration-1000 ${
+              className={`transition-all duration-1000 ${
                 isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
+              }`}
+            >
+              <div className="max-w-2xl">
+                <span className="inline-flex rounded-full border border-[#00b274]/20 bg-[#00b274]/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#7ef7c4]">
+                  Mobile App
+                </span>
+
+                <h2 className="mt-5 text-4xl font-semibold tracking-[-0.05em] text-white md:text-5xl xl:text-6xl">
+                  CRM that feels
+                  <span className="block bg-gradient-to-r from-[#19d3a2] via-[#7ef7c4] to-[#56b8ff] bg-clip-text text-transparent">
+                    fast on the move
+                  </span>
+                </h2>
+
+                <p className="mt-5 max-w-xl text-sm leading-7 text-slate-400 md:text-base">
+                  A cleaner mobile companion for leads, follow-ups, and quick field updates. Less noise, faster action,
+                  and the same core CRM context wherever your team is working.
+                </p>
+
+                <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                  {featureCards.map((feature) => (
+                    <div
+                      key={feature.title}
+                      className="rounded-[1.4rem] border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-[#00b274]/20 hover:bg-white/[0.05]"
+                    >
+                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-2xl bg-[#00b274]/12 text-[#7ef7c4]">
+                        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
+                      <p className="mt-2 text-xs leading-6 text-slate-400">{feature.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <a
+                    href="#contact"
+                    className="group inline-flex items-center justify-center gap-3 rounded-2xl border border-[#00b274]/25 bg-[linear-gradient(90deg,rgba(20,195,142,0.18),rgba(56,189,248,0.08))] px-6 py-4 text-left transition-all hover:border-[#7ef7c4]/45 hover:shadow-[0_16px_40px_rgba(20,195,142,0.16)]"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white overflow-hidden shadow-sm">
+                      <img src="/play-store.jpg" alt="Play Store Icon" className="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                      <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">Mobile access</span>
+                      <span className="mt-1 block text-base font-semibold text-white group-hover:text-[#7ef7c4]">
+                        Request the app demo
+                      </span>
+                    </div>
+                  </a>
+
+                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
+                    Coming Soon
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile UI - Now on Right */}
+            <div
+              className={`relative flex justify-center lg:justify-end transition-all duration-1000 delay-150 ${
+                isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
               }`}
             >
               <div className="relative w-full max-w-[420px] rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
@@ -71,13 +136,11 @@ export default function GooglePlaySection() {
                         <p className="mt-1 text-sm font-semibold text-white">Trio CRM Mobile</p>
                       </div>
                       <div className="relative h-11 w-11 overflow-hidden rounded-2xl border border-white/10 bg-white">
-                        <NextImage
+                        <img
                           src="/trio-crm.png"
                           alt="Trio CRM logo"
-                          fill
-                          className="object-contain p-1.5"
+                          className="w-full h-full object-contain p-1.5"
                         />
-
                       </div>
                     </div>
 
@@ -126,70 +189,6 @@ export default function GooglePlaySection() {
                 <div className="float-slow-delayed absolute -right-3 bottom-12 hidden rounded-2xl border border-[#00b274]/15 bg-[#071821]/90 px-3 py-2 shadow-xl backdrop-blur-md md:block">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#8ef9d0]">Update</p>
                   <p className="mt-1 text-sm font-semibold text-white">Field notes in 1 tap</p>
-                </div>
-              </div>
-            </div>
-
-            <div
-              className={`transition-all duration-1000 delay-150 ${
-                isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-              }`}
-            >
-              <div className="max-w-2xl">
-                <span className="inline-flex rounded-full border border-[#00b274]/20 bg-[#00b274]/8 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.34em] text-[#7ef7c4]">
-                  Mobile App
-                </span>
-
-                <h2 className="mt-5 text-4xl font-semibold tracking-[-0.05em] text-white md:text-5xl xl:text-6xl">
-                  CRM that feels
-                  <span className="block bg-gradient-to-r from-[#19d3a2] via-[#7ef7c4] to-[#56b8ff] bg-clip-text text-transparent">
-                    fast on the move
-                  </span>
-                </h2>
-
-                <p className="mt-5 max-w-xl text-sm leading-7 text-slate-400 md:text-base">
-                  A cleaner mobile companion for leads, follow-ups, and quick field updates. Less noise, faster action,
-                  and the same core CRM context wherever your team is working.
-                </p>
-
-                <div className="mt-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                  {featureCards.map((feature) => (
-                    <div
-                      key={feature.title}
-                      className="rounded-[1.4rem] border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-[#00b274]/20 hover:bg-white/[0.05]"
-                    >
-                      <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-2xl bg-[#00b274]/12 text-[#7ef7c4]">
-                        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <h3 className="text-sm font-semibold text-white">{feature.title}</h3>
-                      <p className="mt-2 text-xs leading-6 text-slate-400">{feature.description}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <a
-                    href="#contact"
-                    className="group inline-flex items-center justify-center gap-3 rounded-2xl border border-[#00b274]/25 bg-[linear-gradient(90deg,rgba(20,195,142,0.18),rgba(56,189,248,0.08))] px-6 py-4 text-left transition-all hover:border-[#7ef7c4]/45 hover:shadow-[0_16px_40px_rgba(20,195,142,0.16)]"
-                  >
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#06131f] text-white">
-                      <svg className="h-7 w-7" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.523 15.3414L20.355 12.1336L17.523 8.92591V15.3414ZM3.64795 3.32178C3.41164 3.55809 3.27246 3.91223 3.27246 4.31422V19.6858C3.27246 20.0878 3.41164 20.4419 3.64795 20.6782L3.71887 20.7491L12.4338 12.0342V11.9658L3.71887 3.25085L3.64795 3.32178ZM16.3298 16.5345L13.5674 13.7721L12.4338 14.9057V14.9741L15.9045 18.4449C16.3415 18.8818 17.0622 18.8818 17.4992 18.4449L20.355 15.5891L16.3298 16.5345ZM16.3298 7.46549L20.355 8.41091L17.4992 5.55512C17.0622 5.11815 16.3415 5.11815 15.9045 5.55512L12.4338 9.02588V9.0943L13.5674 10.2279L16.3298 7.46549Z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <span className="block text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-400">Mobile access</span>
-                      <span className="mt-1 block text-base font-semibold text-white group-hover:text-[#7ef7c4]">
-                        Request the app demo
-                      </span>
-                    </div>
-                  </a>
-
-                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">
-                    Cleaner UI. Quicker updates. Better field visibility.
-                  </p>
                 </div>
               </div>
             </div>

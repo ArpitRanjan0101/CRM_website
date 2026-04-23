@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import NextImage from "next/image";
+
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -77,12 +77,12 @@ export default function Navbar() {
           <div className="flex items-center gap-8">
             <Link href="/" className="relative z-10 inline-flex items-center gap-3 cursor-pointer" aria-label="Go to home page">
               <div className="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 shadow-lg shadow-[#14c38e]/10">
-                <NextImage 
+                <img 
                   src="/triostack-logo.jpeg" 
                   alt="Triostack Logo" 
-                  fill 
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
+
 
               </div>
               <span className="text-xl font-bold text-[#f3fffb] tracking-tight">Triostack</span>
