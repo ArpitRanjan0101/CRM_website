@@ -4,8 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5015:3000"
+      - "5015:5015"
+    env_file:
+      - .env.local
     environment:
       NODE_ENV: production
-      PORT: 3000
+      PORT: 5015
     restart: unless-stopped

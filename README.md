@@ -81,7 +81,7 @@ docker compose up --build
 Then open:
 
 ```text
-http://localhost:3000
+http://localhost:5015
 ```
 
 ### Faster start (don’t rebuild every time)
@@ -120,7 +120,7 @@ docker compose up --build
 
 ```bash
 docker build -t crm_website .
-docker run --rm -p 3000:3000 crm_website
+docker run --rm -p 5015:5015 crm_website
 ```
 
 ## Docker (Development / Hot Reload)
