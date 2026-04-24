@@ -29,49 +29,47 @@ export default function BrandSection() {
           <div className="hidden md:block h-px flex-1 bg-gradient-to-r from-white/0 via-white/15 to-white/0" />
         </div>
 
-        <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 md:p-7 shadow-[0_30px_120px_rgba(0,0,0,0.55)]">
-          <div className="pause-on-hover space-y-5 md:space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md px-3 py-4 md:px-4 md:py-5">
-              <div className="relative overflow-hidden mask-gradient">
-                <div className="flex w-max animate-marquee-left items-center gap-6 whitespace-nowrap px-2">
-                  {[...topBrands, ...topBrands].map((brand, i) => (
-                    <div
-                      key={`top-${i}`}
-                      className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 opacity-90 transition-all duration-300 hover:bg-white/10 hover:opacity-100"
-                    >
-                      <Image
-                        src={brand.logo}
-                        alt={brand.name}
-                        width={180}
-                        height={56}
-                        className="h-9 w-auto object-contain md:h-10"
-                        priority={i < 2}
-                      />
-                    </div>
-                  ))}
-                </div>
+        <div className="mt-10 pause-on-hover space-y-5 md:space-y-6">
+          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md px-3 py-4 md:px-4 md:py-5">
+            <div className="relative overflow-hidden mask-gradient">
+              <div className="flex w-max animate-marquee-left items-center gap-6 whitespace-nowrap px-2">
+                {[...topBrands, ...topBrands].map((brand, i) => (
+                  <div
+                    key={`top-${i}`}
+                    className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 opacity-90 transition-all duration-300 hover:bg-white/10 hover:opacity-100"
+                  >
+                    <Image
+                      src={brand.logo}
+                      alt={brand.name}
+                      width={180}
+                      height={56}
+                      className="h-9 w-auto object-contain md:h-10"
+                      priority={i < 2}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
 
-            <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md px-3 py-4 md:px-4 md:py-5">
-              <div className="relative overflow-hidden mask-gradient">
-                <div className="flex w-max animate-marquee-right items-center gap-6 whitespace-nowrap px-2">
-                  {[...bottomBrands, ...bottomBrands].map((brand, i) => (
-                    <div
-                      key={`bottom-${i}`}
-                      className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 opacity-85 transition-all duration-300 hover:bg-white/10 hover:opacity-100"
-                    >
-                      <Image
-                        src={brand.logo}
-                        alt={brand.name}
-                        width={180}
-                        height={56}
-                        className="h-9 w-auto object-contain md:h-10"
-                        priority={i < 2}
-                      />
-                    </div>
-                  ))}
-                </div>
+          <div className="rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md px-3 py-4 md:px-4 md:py-5">
+            <div className="relative overflow-hidden mask-gradient">
+              <div className="flex w-max animate-marquee-right items-center gap-6 whitespace-nowrap px-2">
+                {[...bottomBrands, ...bottomBrands].map((brand, i) => (
+                  <div
+                    key={`bottom-${i}`}
+                    className="flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-7 py-4 opacity-85 transition-all duration-300 hover:bg-white/10 hover:opacity-100"
+                  >
+                    <Image
+                      src={brand.logo}
+                      alt={brand.name}
+                      width={180}
+                      height={56}
+                      className="h-9 w-auto object-contain md:h-10"
+                      priority={i < 2}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
