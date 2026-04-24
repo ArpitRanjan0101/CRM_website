@@ -1,7 +1,7 @@
 const socials = [
   {
     name: "Twitter",
-    href: "https://twitter.com/",
+    href: "https://x.com/triostack",
     brand: "#1DA1F2",
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
