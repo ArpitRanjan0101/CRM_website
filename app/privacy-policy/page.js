@@ -89,11 +89,11 @@ export default function PrivacyPolicyPage() {
       <Navbar />
 
       <section className="relative overflow-hidden px-6 pb-10 pt-28 md:pb-14 md:pt-32">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,195,142,0.16),transparent_25%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,195,142,0.16),transparent_25%),radial-gradient(circle_at_top_right,rgba(56,189,248,0.16),transparent_28%)]" />
 
         <div className="relative mx-auto max-w-7xl">
           <div className="relative overflow-hidden rounded-[2.4rem] border border-white/10 shadow-[0_32px_100px_rgba(0,0,0,0.35)]">
-            <div className="absolute inset-0">
+            <div className="pointer-events-none absolute inset-0">
               <Image
                 src="/img.png"
                 alt="CRM Suite office workspace"
@@ -102,7 +102,7 @@ export default function PrivacyPolicyPage() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,15,27,0.72),rgba(8,24,38,0.5)),linear-gradient(135deg,rgba(20,195,142,0.32),rgba(9,16,30,0.35)_55%,rgba(56,189,248,0.28))]" />
+            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(6,15,27,0.72),rgba(8,24,38,0.5)),linear-gradient(135deg,rgba(20,195,142,0.32),rgba(9,16,30,0.35)_55%,rgba(56,189,248,0.28))]" />
 
             <div className="relative flex min-h-[320px] items-center justify-center px-8 py-16 text-center md:min-h-[390px] md:px-16">
               <div className="max-w-3xl">

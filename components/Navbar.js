@@ -1,5 +1,9 @@
 "use client";
 
+import Link from "next/link";
+
+
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import BookCallModal from "./BookCallModal";
 
@@ -9,7 +13,9 @@ export default function Navbar() {
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isBookCallOpen, setIsBookCallOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const pathname = usePathname();
 
   const handleLoginClick = () => {
     window.location.assign(CRM_LOGIN_URL);
@@ -17,6 +23,7 @@ export default function Navbar() {
 
   const handleBookCallOpen = () => {
     setIsBookCallOpen(true);
+    setIsMobileMenuOpen(false);
   };
 
   const handleBookCallClose = () => {
@@ -26,21 +33,17 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
-      // Update scrolled state for background effect
       setIsScrolled(currentScrollY > 20);
-
-      // Visibility logic (hide on scroll down, show on scroll up)
       const scrollDelta = currentScrollY - lastScrollY.current;
 
       if (currentScrollY <= 20) {
         setIsVisible(true);
       } else if (scrollDelta > 8) {
         setIsVisible(false);
+        setIsMobileMenuOpen(false);
       } else if (scrollDelta < -8) {
         setIsVisible(true);
       }
-
       lastScrollY.current = currentScrollY;
     };
 
@@ -48,6 +51,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu on path change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const links = [
     { name: "Home", href: "/" },
@@ -60,7 +68,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[80] transition-all duration-300 will-change-transform ${
+        className={`fixed top-0 left-0 w-full z-[200] isolate pointer-events-auto transition-all duration-300 will-change-transform ${
           isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
         } ${
           isScrolled
@@ -68,24 +76,33 @@ export default function Navbar() {
             : "bg-[#050b14]/72 backdrop-blur-lg py-6 border-b border-white/8 shadow-[0_16px_36px_rgba(2,6,16,0.32)]"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <a href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-[#14c38e] via-[#19d3a2] to-[#53e5e2] rounded-lg rotate-12 flex items-center justify-center shadow-[0_8px_24px_rgba(20,195,142,0.35)]">
-                <span className="text-white font-bold -rotate-12">T</span>
+            <Link href="/" className="relative z-10 inline-flex items-center gap-3 cursor-pointer" aria-label="Go to home page">
+              <div className="relative w-10 h-10 overflow-hidden rounded-xl border border-white/10 shadow-lg shadow-[#14c38e]/10">
+                <img 
+                  src="/triostack-logo.jpeg" 
+                  alt="Trio-CRM Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="text-xl font-bold text-[#f3fffb] tracking-tight">Triostack</span>
-            </a>
+              <span className="text-xl font-bold text-[#f3fffb] tracking-tight">Trio-CRM</span>
+            </Link>
 
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-2">
               {links.map((link) => (
-                <a
+                <Link
                   key={link.name}
                   href={link.href}
-                  className="text-[13px] font-medium text-slate-200/90 hover:text-[#7ef7c4] transition-colors"
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  className={`relative z-10 inline-flex items-center rounded-full px-4 py-2 text-[13px] font-medium transition-colors cursor-pointer ${
+                    pathname === link.href
+                      ? "text-[#7ef7c4]"
+                      : "text-slate-200/90 hover:text-[#7ef7c4]"
+                  }`}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -94,20 +111,72 @@ export default function Navbar() {
             <a
               href={CRM_LOGIN_URL}
               onClick={handleLoginClick}
-              className="hidden md:block text-sm font-medium text-slate-100 hover:text-[#7ef7c4] transition-colors cursor-pointer"
+              className="hidden lg:block text-sm font-medium text-slate-100 hover:text-[#7ef7c4] transition-colors cursor-pointer"
             >
               Login
             </a>
             <button
               type="button"
               onClick={handleBookCallOpen}
-              aria-haspopup="dialog"
-              aria-expanded={isBookCallOpen}
-              aria-controls="book-call-modal"
-              className="bg-gradient-to-r from-[#7ef7c4] via-[#37dfaa] to-[#14c38e] text-[#04111c] px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:brightness-105 hover:shadow-[0_0_24px_rgba(55,223,170,0.28)] cursor-pointer"
+              className="hidden lg:block bg-gradient-to-r from-[#7ef7c4] via-[#37dfaa] to-[#14c38e] text-[#04111c] px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:brightness-105 hover:shadow-[0_0_24px_rgba(55,223,170,0.28)] cursor-pointer"
             >
               Book a Call
             </button>
+
+            {/* Mobile Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-white/80 hover:text-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              <div className="w-6 h-5 relative flex flex-col justify-between overflow-hidden">
+                <span className={`w-full h-0.5 bg-current transition-all duration-300 origin-left ${isMobileMenuOpen ? 'rotate-45 translate-x-1' : ''}`} />
+                <span className={`w-full h-0.5 bg-current transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+                <span className={`w-full h-0.5 bg-current transition-all duration-300 origin-left ${isMobileMenuOpen ? '-rotate-45 translate-x-1' : ''}`} />
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        <div 
+          className={`lg:hidden fixed inset-0 top-[73px] bg-[#050b14]/95 backdrop-blur-2xl transition-all duration-500 overflow-hidden ${
+            isMobileMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full pointer-events-none'
+          }`}
+        >
+          <div className="p-8 flex flex-col gap-6">
+            <div className="flex flex-col gap-4">
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2">Navigation</p>
+              {links.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-2xl font-bold transition-colors ${
+                    pathname === link.href ? 'text-[#7ef7c4]' : 'text-white hover:text-[#7ef7c4]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+            
+            <div className="h-px bg-white/10 my-4" />
+            
+            <div className="flex flex-col gap-5">
+              <a
+                href={CRM_LOGIN_URL}
+                onClick={handleLoginClick}
+                className="text-xl font-bold text-white hover:text-[#7ef7c4] transition-colors"
+              >
+                Login
+              </a>
+              <button
+                onClick={handleBookCallOpen}
+                className="w-full bg-gradient-to-r from-[#7ef7c4] via-[#37dfaa] to-[#14c38e] text-[#04111c] py-4 rounded-2xl text-lg font-bold shadow-xl shadow-[#7ef7c4]/10"
+              >
+                Book a Call
+              </button>
+            </div>
           </div>
         </div>
       </nav>

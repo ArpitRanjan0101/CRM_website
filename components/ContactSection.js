@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { submitLead } from "@/lib/submitLead";
 
 export default function ContactSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,6 +12,8 @@ export default function ContactSection() {
     phone: "",
     message: ""
   });
+  const [submitState, setSubmitState] = useState("idle");
+  const [submitError, setSubmitError] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -56,10 +59,34 @@ export default function ContactSection() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add submission logic here
+
+    setSubmitState("submitting");
+    setSubmitError("");
+
+    try {
+      await submitLead({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        formId: "contact-section",
+      });
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+      });
+      setSubmitState("success");
+    } catch (error) {
+      setSubmitState("error");
+      setSubmitError(
+        error instanceof Error ? error.message : "Unable to send your message right now."
+      );
+    }
   };
 
   return (
@@ -190,15 +217,24 @@ export default function ContactSection() {
 
                 <button 
                   type="submit"
+                  disabled={submitState === "submitting"}
                   className="w-full bg-gradient-to-r from-[#00b274] to-[#009661] text-white text-sm font-bold py-3.5 rounded-full shadow-lg shadow-[#00b274]/20 hover:shadow-[#00b274]/40 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 mt-2 group"
                 >
                   <span className="flex items-center justify-center gap-2">
-                    Send Message
+                    {submitState === "submitting" ? "Sending..." : "Send Message"}
                     <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </span>
                 </button>
+
+                {submitError ? (
+                  <p className="text-sm text-red-400">{submitError}</p>
+                ) : null}
+
+                {submitState === "success" ? (
+                  <p className="text-sm text-[#7ef7c4]">Your message was sent successfully.</p>
+                ) : null}
               </form>
             </div>
           </div>

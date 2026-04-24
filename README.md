@@ -1,14 +1,14 @@
 # CRM Website
 
-This project is a Next.js 16 marketing website for a CRM product. It includes a landing page, pricing page, industries page, features page, blog listing with blog detail pages, legal pages, and a brochure download route.
+This project is a Next.js 16 marketing website for Triostack CRM. It includes a landing page, pricing page, industries page, features page, blog listing with detail pages, legal pages, and a brochure download route.
 
-The project is currently set up to run through Docker on a single public port:
+The project is configured to run on one public application port only:
 
 ```text
 http://localhost:3000
 ```
 
-## Current Stack
+## Stack
 
 - Next.js 16 with App Router
 - React 19
@@ -16,71 +16,71 @@ http://localhost:3000
 - Tailwind CSS 4
 - Docker Compose
 
-## Active Pages
+## Active Routes
 
-- `/` home page
-- `/features` CRM features page
-- `/pricing` pricing and plan comparison page
-- `/industries` industries overview page
-- `/blogs` blog listing page
-- `/blogs/[slug]` blog detail page
-- `/privacy-policy` privacy page
-- `/terms-and-conditions` legal terms page
-- `/crm-brochure` brochure download route
+- `/`
+- `/features`
+- `/pricing`
+- `/industries`
+- `/blogs`
+- `/blogs/[slug]`
+- `/privacy-policy`
+- `/terms-and-conditions`
+- `/crm-brochure`
+- `/api/lead`
+- `/api/blogs`
 
-## Active UI Structure
-
-### Main app files
+## Main Structure
 
 ```text
 app/
-  layout.js
-  page.js
-  globals.css
+  api/
+    blogs/
+    lead/
   blogs/
+    [slug]/
   crm-brochure/
   features/
   industries/
   pricing/
   privacy-policy/
   terms-and-conditions/
-```
+  globals.css
+  layout.js
+  page.js
 
-### Main reusable components
-
-```text
 components/
-  Navbar.js
-  HeroSection.js
-  HeroForm.js
-  FeaturesSection.js
-  ProductShowcase.js
-  PricingSection.js
-  TestimonialSection.js
-  ConsultationSection.js
-  FAQSection.js
-  BrandSection.js
-  TrustSection.js
-  ContactSection.js
-  ContactLink.js
   BookCallModal.js
-  Reveal.js
+  BrandSection.js
   Chatbot.js
-  WhatsAppButton.js
+  ConsultationSection.js
+  ContactLink.js
+  ContactSection.js
+  FAQSection.js
+  FeaturesSection.js
+  GooglePlaySection.js
+  HeroForm.js
+  HeroSection.js
+  Navbar.js
+  PricingSection.js
+  ProductShowcase.js
+  Reveal.js
+  SEOComponent.js
   SocialStickyBar.js
+  TestimonialSection.js
+  TrustSection.js
+  WhatsAppButton.js
 ```
 
-## Run The Project
+## Run With Docker
 
-### Recommended: Docker
-
-Build and start the site:
+Build and start:
 
 ```bash
 docker compose up --build -d
 ```
 
-Or use the npm shortcut:
+Or:
 
 ```bash
 npm run docker:build
@@ -98,7 +98,7 @@ Or:
 npm run docker:up
 ```
 
-Stop the project:
+Stop:
 
 ```bash
 docker compose down
@@ -118,40 +118,56 @@ npm run docker:logs
 
 ## Port Configuration
 
-The project intentionally uses one app port only:
+Docker and the app are aligned to one runtime port:
 
 ```text
 3000:3000
 ```
 
+## Environment Variables
+
+Create a local `.env` file for server-side values. This file is ignored by Git.
+
+Current server features can use:
+
+```text
+BLOG_API_TOKEN=
+BLOGS_API_URL=https://api.blog-manager.triostack.in/api/blogs
+TRIO_CRM_WEBSITE_WEBHOOK_URL=
+TRIO_CRM_WEBSITE_WEBHOOK_SECRET=
+```
+
 ## Local Development
 
-The project no longer needs a local `node_modules` folder to stay in the workspace. Docker installs dependencies inside the image.
+You do not need a local `node_modules` folder to keep this project running when using Docker.
 
-If you want to run it locally again later:
+If you want to run it directly with Node later:
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Important Project Files
+## Windows Docker Troubleshooting
 
-- [package.json](/c:/Users/ACER/Desktop/CRM_Website/package.json) npm scripts and dependencies
-- [docker-compose.yml](/c:/Users/ACER/Desktop/CRM_Website/docker-compose.yml) single-container Docker runtime
-- [Dockerfile](/c:/Users/ACER/Desktop/CRM_Website/Dockerfile) production image build
-- [app/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/page.js) home page composition
-- [app/blogs/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/blogs/page.js) blog listing page
-- [app/blogs/[slug]/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/blogs/[slug]/page.js) blog detail page
-- [app/layout.js](/c:/Users/ACER/Desktop/CRM_Website/app/layout.js) shared layout and global widgets
+If Docker cannot connect to the engine, make sure Docker Desktop is running and reopen the terminal.
 
-## Cleanup Notes
+If you hit Docker config permission issues under `C:\Users\<you>\.docker`, use a project-local Docker config for the current terminal session:
 
-The repo has been cleaned to remove:
+```powershell
+$env:DOCKER_CONFIG = (Join-Path $PWD ".docker")
+New-Item -ItemType Directory -Force -Path $env:DOCKER_CONFIG | Out-Null
+docker compose up --build -d
+```
 
-- local `node_modules`
-- unused old component files
-- old Docker dev-only files
-- generated Next.js output and local log files
+## Cleanup Status
 
-Generated files are also covered by [`.gitignore`](/c:/Users/ACER/Desktop/CRM_Website/.gitignore).
+The repo has already been cleaned to avoid committing generated or local-only files such as:
+
+- `node_modules`
+- `.next`
+- Next.js log files
+- local Docker config
+- local environment files
+
+Those are covered by `.gitignore`.

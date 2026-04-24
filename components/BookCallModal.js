@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { submitLead } from "@/lib/submitLead";
 
 export default function BookCallModal({
   isOpen,
@@ -8,19 +9,53 @@ export default function BookCallModal({
   title = "Book a Call",
   subtitle = "Share your details and our team will contact you shortly.",
 }) {
+  const [status, setStatus] = useState("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleBackdropClick = (event) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    onClose();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      await submitLead({
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        company: formData.get("company"),
+        formId: "book-call-modal",
+        notes: `Modal title: ${title}`,
+        extra: {
+          crm_solution: formData.get("crm_solution"),
+          modal_subtitle: subtitle,
+        },
+      });
+
+      form.reset();
+      setStatus("success");
+      onClose();
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error ? error.message : "Unable to submit your request right now."
+      );
+    }
   };
 
   useEffect(() => {
     if (!isOpen) {
+      setStatus("idle");
+      setErrorMessage("");
       return undefined;
     }
 
@@ -87,6 +122,7 @@ export default function BookCallModal({
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <input
+                name="name"
                 type="text"
                 placeholder="Full Name *"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
@@ -95,6 +131,7 @@ export default function BookCallModal({
             </div>
             <div>
               <input
+                name="phone"
                 type="tel"
                 placeholder="Phone Number *"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
@@ -103,20 +140,26 @@ export default function BookCallModal({
             </div>
             <div>
               <input
+                name="email"
                 type="email"
-                placeholder="Work Email (Optional)"
+                placeholder="Work Email *"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
+                required
               />
             </div>
             <div>
               <input
+                name="company"
                 type="text"
                 placeholder="Company Name (Optional)"
                 className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
               />
             </div>
             <div>
-              <select className="w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20">
+              <select
+                name="crm_solution"
+                className="w-full cursor-pointer appearance-none rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-500 transition-all focus:border-[#00b274] focus:outline-none focus:ring-2 focus:ring-[#00b274]/20"
+              >
                 <option value="">CRM Solutions</option>
                 <option value="enterprise">Enterprise CRM</option>
                 <option value="sales">Sales Automation</option>
@@ -126,10 +169,15 @@ export default function BookCallModal({
 
             <button
               type="submit"
+              disabled={status === "submitting"}
               className="mt-2 w-full rounded-xl bg-[#00b274] py-4 font-bold text-white shadow-lg shadow-[#00b274]/30 transition-all duration-300 hover:bg-[#009661] active:scale-[0.98]"
             >
-              Submit Request
+              {status === "submitting" ? "Submitting..." : "Submit Request"}
             </button>
+
+            {errorMessage ? (
+              <p className="text-sm text-red-600">{errorMessage}</p>
+            ) : null}
           </form>
         </div>
       </div>
