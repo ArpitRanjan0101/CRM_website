@@ -132,6 +132,12 @@ If you prefer Docker with hot reload, use:
 npm run docker:dev
 ```
 
+Notes (Windows / OneDrive):
+
+- `docker compose up` (production) will **not** hot reload — use `npm run docker:dev`.
+- Dev Docker uses polling (WATCHPACK/CHOKIDAR). It also forces webpack mode when Next supports `--no-turbo`, because Turbopack file watching can be flaky on bind mounts.
+- If polling still misses changes, move the repo out of OneDrive-synced folders (e.g. `C:\dev\CRM_website`) and try again.
+
 ## Port Configuration
 
 Docker and the app are aligned to one runtime port:
