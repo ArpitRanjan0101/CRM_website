@@ -2,7 +2,6 @@
 
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 const categories = ["CRM Strategy", "Automation", "Sales Ops", "Compliance", "Growth"];
 
@@ -52,12 +51,6 @@ const posts = [
 ];
 
 export default function BlogsPage() {
-  const router = useRouter();
-
-  const handleReadNow = (slug) => {
-    router.push(`/blogs/${slug}`);
-  };
-
   return (
     <main className="min-h-screen bg-[#0b1220]">
       <Navbar />
@@ -119,17 +112,9 @@ export default function BlogsPage() {
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {posts.map((post, index) => (
-              <article
+              <Link
                 key={post.slug}
-                onClick={() => handleReadNow(post.slug)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    handleReadNow(post.slug);
-                  }
-                }}
-                role="link"
-                tabIndex={0}
+                href={`/blogs/${post.slug}`}
                 className="group flex h-full cursor-pointer animate-fade-in overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.04] transition duration-300 hover:border-[#8be9ff]/25 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7ef7c4] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1220]"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
@@ -147,20 +132,13 @@ export default function BlogsPage() {
                   <div className="p-7 flex-grow flex flex-col">
                     <h3 className="text-lg font-semibold tracking-tight text-white group-hover:text-[#7ef7c4] transition-colors">{post.title}</h3>
                     <p className="mt-3 text-[13px] leading-6 text-slate-400 line-clamp-2">{post.excerpt}</p>
-                    <button
-                      type="button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleReadNow(post.slug);
-                      }}
-                      className="relative z-10 mt-auto flex w-fit items-center gap-2 pt-5 text-left text-xs font-bold text-[#7ef7c4] transition group-hover:gap-3"
-                    >
+                    <span className="relative z-10 mt-auto inline-flex w-fit cursor-pointer select-none items-center gap-2 pt-5 text-left text-xs font-bold text-[#7ef7c4] transition group-hover:gap-3">
                       Read Now
                       <span aria-hidden="true">&rarr;</span>
-                    </button>
+                    </span>
                   </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

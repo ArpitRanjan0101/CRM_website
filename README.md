@@ -1,196 +1,157 @@
-# TrioRecord
+# CRM Website
 
-TrioRecord is a modern SaaS-style single-page landing website built with Next.js App Router, JavaScript, and Tailwind CSS. It presents a premium document recording and management product with a polished hero, feature sections, a real downloadable PDF, and a validated contact form.
+This project is a Next.js 16 marketing website for a CRM product. It includes a landing page, pricing page, industries page, features page, blog listing with blog detail pages, legal pages, and a brochure download route.
 
-## Tech Stack
-
-- Next.js 16 (App Router)
-- React 19
-- JavaScript (ES6+)
-- Tailwind CSS 4
-
-## Features
-
-- Sticky responsive navbar with mobile menu
-- Premium hero section with product-style preview UI
-- Feature cards with hover effects
-- About section with SaaS-style enterprise messaging
-- Real document download from `public/sample.pdf`
-- Contact form with required validation, email validation, loading state, success message, and reset behavior
-- Smooth scrolling and scroll reveal animation
-- Fully responsive layout
-
-## Project Structure
+The project is currently set up to run through Docker on a single public port:
 
 ```text
-triocard/
-  app/
-    globals.css
-    layout.js
-    page.js
-  components/
-    About.js
-    Contact.js
-    Document.js
-    Features.js
-    Footer.js
-    Hero.js
-    Navbar.js
-    Reveal.js
-  public/
-    sample.pdf
-  jsconfig.json
-  package.json
-  postcss.config.mjs
+http://localhost:3000
 ```
 
-## Getting Started
+## Current Stack
 
-### 1. Install dependencies
+- Next.js 16 with App Router
+- React 19
+- JavaScript
+- Tailwind CSS 4
+- Docker Compose
+
+## Active Pages
+
+- `/` home page
+- `/features` CRM features page
+- `/pricing` pricing and plan comparison page
+- `/industries` industries overview page
+- `/blogs` blog listing page
+- `/blogs/[slug]` blog detail page
+- `/privacy-policy` privacy page
+- `/terms-and-conditions` legal terms page
+- `/crm-brochure` brochure download route
+
+## Active UI Structure
+
+### Main app files
+
+```text
+app/
+  layout.js
+  page.js
+  globals.css
+  blogs/
+  crm-brochure/
+  features/
+  industries/
+  pricing/
+  privacy-policy/
+  terms-and-conditions/
+```
+
+### Main reusable components
+
+```text
+components/
+  Navbar.js
+  HeroSection.js
+  HeroForm.js
+  FeaturesSection.js
+  ProductShowcase.js
+  PricingSection.js
+  TestimonialSection.js
+  ConsultationSection.js
+  FAQSection.js
+  BrandSection.js
+  TrustSection.js
+  ContactSection.js
+  ContactLink.js
+  BookCallModal.js
+  Reveal.js
+  Chatbot.js
+  WhatsAppButton.js
+  SocialStickyBar.js
+```
+
+## Run The Project
+
+### Recommended: Docker
+
+Build and start the site:
+
+```bash
+docker compose up --build -d
+```
+
+Or use the npm shortcut:
+
+```bash
+npm run docker:build
+```
+
+Start again without rebuilding:
+
+```bash
+docker compose up -d
+```
+
+Or:
+
+```bash
+npm run docker:up
+```
+
+Stop the project:
+
+```bash
+docker compose down
+```
+
+Or:
+
+```bash
+npm run docker:down
+```
+
+View logs:
+
+```bash
+npm run docker:logs
+```
+
+## Port Configuration
+
+The project intentionally uses one app port only:
+
+```text
+3000:3000
+```
+
+## Local Development
+
+The project no longer needs a local `node_modules` folder to stay in the workspace. Docker installs dependencies inside the image.
+
+If you want to run it locally again later:
 
 ```bash
 npm install
-```
-
-### 2. Run the development server
-
-```bash
 npm run dev
 ```
 
-By default, the app runs at:
+## Important Project Files
 
-```text
-http://localhost:3000
-```
+- [package.json](/c:/Users/ACER/Desktop/CRM_Website/package.json) npm scripts and dependencies
+- [docker-compose.yml](/c:/Users/ACER/Desktop/CRM_Website/docker-compose.yml) single-container Docker runtime
+- [Dockerfile](/c:/Users/ACER/Desktop/CRM_Website/Dockerfile) production image build
+- [app/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/page.js) home page composition
+- [app/blogs/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/blogs/page.js) blog listing page
+- [app/blogs/[slug]/page.js](/c:/Users/ACER/Desktop/CRM_Website/app/blogs/[slug]/page.js) blog detail page
+- [app/layout.js](/c:/Users/ACER/Desktop/CRM_Website/app/layout.js) shared layout and global widgets
 
-In the current local environment, the dev server was verified at:
+## Cleanup Notes
 
-```text
-http://localhost:3000
-```
+The repo has been cleaned to remove:
 
-## Docker (Production)
+- local `node_modules`
+- unused old component files
+- old Docker dev-only files
+- generated Next.js output and local log files
 
-### Build and run with Docker Compose
-
-```bash
-docker compose up --build
-```
-
-Then open:
-
-```text
-http://localhost:3000
-```
-
-### Faster start (don’t rebuild every time)
-
-The long delay you see is because `--build` rebuilds the image (runs `npm ci` + `next build`) on every start.
-
-Do this once:
-
-```bash
-docker compose build
-```
-
-Then start quickly:
-
-```bash
-docker compose up
-```
-
-### Troubleshooting (Windows)
-
-If you see errors like `permission denied while trying to connect to the docker API`:
-
-- Ensure Docker Desktop is running and your user has access to the Docker engine (often via the `docker-users` group), then reopen your terminal.
-
-If you see `Access is denied` for `C:\\Users\\<you>\\.docker\\...`:
-
-- Use a project-local Docker CLI config folder for the session:
-
-```powershell
-$env:DOCKER_CONFIG = (Join-Path $PWD ".docker")
-New-Item -ItemType Directory -Force -Path $env:DOCKER_CONFIG | Out-Null
-docker compose up --build
-```
-
-### Build and run with Docker (no Compose)
-
-```bash
-docker build -t crm_website .
-docker run --rm -p 3000:3000 crm_website
-```
-
-## Docker (Development / Hot Reload)
-
-Runs `next dev` in a container with your source mounted, so edits auto-reload.
-
-```bash
-docker compose -f docker-compose.dev.yml up --build
-```
-
-Then open:
-
-```text
-http://localhost:3000
-```
-
-If you change `package-lock.json` / dependencies, rebuild:
-
-```bash
-docker compose -f docker-compose.dev.yml up --build
-```
-
-### 3. Create a production build
-
-```bash
-npm run build
-```
-
-### 4. Start the production server
-
-```bash
-npm run start
-```
-
-## Download Functionality
-
-The document section includes a real working download button that points to:
-
-```text
-/sample.pdf
-```
-
-This file is stored in:
-
-```text
-public/sample.pdf
-```
-
-## Main Sections
-
-- `Home`: Hero section and primary product message
-- `Features`: Secure storage, easy access, fast download, and real-time management
-- `About`: Product positioning and enterprise-style overview
-- `Document`: Downloadable TrioRecord guide
-- `Contact`: Frontend-only validated contact form
-
-## Accessibility and UI Notes
-
-- Semantic section structure
-- Form labels and validation messaging
-- Keyboard-friendly navigation and buttons
-- Mobile-first responsive behavior
-- Soft shadows, rounded surfaces, gradients, and clean spacing for a premium SaaS look
-
-## Verification
-
-The project was verified with:
-
-```bash
-npm run build
-```
-
-The build completed successfully on Next.js `16.2.4`.
+Generated files are also covered by [`.gitignore`](/c:/Users/ACER/Desktop/CRM_Website/.gitignore).
